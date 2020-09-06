@@ -13,6 +13,20 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author user
  */
 public class Tela1 extends javax.swing.JFrame {
+    // Estatisticas(Min,Avg e Max)
+    Double valueMaxCpu = 0.0;
+    Double valueMinCpu = 1000000.0;
+    Double valueMedCpu;
+    Double somaCpu = 0.0;
+    Double valueMaxDisk = 0.0;
+    Double valueMinDisk = 10000000.0;
+    Double valueMedDisk;
+    Double somaDisk = 0.0;
+    Double valueMaxMem = 0.0;
+    Double valueMinMem = 10000000.0;
+    Double valueMedMem;
+    Double somaMem = 0.0;
+    Integer contador = 1;
 
     /**
      * Creates new form Tela1
@@ -277,7 +291,7 @@ public class Tela1 extends javax.swing.JFrame {
         // Variaveis
         Double valorCpu = ThreadLocalRandom.current().nextDouble(2, 5);
         Double valorDisk = ThreadLocalRandom.current().nextDouble(240, 1000);
-        Double valorMemoria = ThreadLocalRandom.current().nextDouble(2, 8);
+        Double valorMem = ThreadLocalRandom.current().nextDouble(2, 8);
         
         // Colocando valores maximos de referência
         pbCpu.setMaximum(5);
@@ -295,12 +309,59 @@ public class Tela1 extends javax.swing.JFrame {
         // Colocando o valor na String da barra
         pbCpu.setString(String.format("%.2f GHz", valorCpu));
         pbDisk.setString(String.format("%.2f GB", valorDisk));
-        pbMemoria.setString(String.format("%.2f GB", valorMemoria));
+        pbMemoria.setString(String.format("%.2f GB", valorMem));
         
         // Colocando os valores gerados nas barras
         pbCpu.setValue(valorCpu.intValue());
         pbDisk.setValue(valorDisk.intValue());
-        pbMemoria.setValue(valorMemoria.intValue());
+        pbMemoria.setValue(valorMem.intValue());
+        
+        // Atualizar Min, Max e Media - CPU
+        if (valorCpu > valueMaxCpu) {
+            valueMaxCpu = valorCpu;
+            lbCpuMax.setText(String.format("%.2f", valorCpu));
+        }
+        if (valorCpu < valueMinCpu) {
+            valueMinCpu = valorCpu;
+            lbCpuMin.setText(String.format("%.2f", valorCpu));
+        }
+        
+        somaCpu += valorCpu;
+        valueMedCpu = somaCpu / contador;
+        
+        lbCpuMed.setText(String.format("%.2f", valueMedCpu));
+        
+        // Atualizar Min, Max e Media - Disco
+        if (valorDisk > valueMaxDisk) {
+            valueMaxDisk = valorDisk;
+            lbDiskMax.setText(String.format("%.2f", valorDisk));
+        }
+        if (valorDisk < valueMinDisk) {
+            valueMinDisk = valorDisk;
+            lbDiskMin.setText(String.format("%.2f", valorDisk));
+        }
+        
+        somaDisk += valorDisk;
+        valueMedDisk = somaDisk / contador;
+        
+        lbDiskMed.setText(String.format("%.2f", valueMedDisk));
+        
+        // Atualizar Min, Max e Media - Memoria
+        if (valorMem > valueMaxMem) {
+            valueMaxMem = valorMem;
+            lbMemMax.setText(String.format("%.2f", valorMem));
+        }
+        if (valorMem < valueMinMem) {
+            valueMinMem = valorMem;
+            lbMemMin.setText(String.format("%.2f", valorMem));
+        }
+        
+        somaMem += valorMem;
+        valueMedMem = somaMem / contador;
+        
+        lbMemMed.setText(String.format("%.2f", valueMedMem));
+        
+        contador++;
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
